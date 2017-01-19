@@ -1,7 +1,7 @@
 #一个简单的JSON解析器
-
-.
-├── lexer
+```
+. 
+├── lexer 
 │   ├── FileUtils.java
 │   ├── JsonLexException.java
 │   └── Lexer.java
@@ -17,3 +17,4 @@
     ├── JsonToken.java
     ├── Token.java
     └── Value.java
+```
