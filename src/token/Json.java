@@ -22,7 +22,7 @@ public class Json extends Object {
         if (json instanceof JsonObject) {
 
         } else if (json instanceof JsonArray) {
-            
+
         }
         return null;
     }
