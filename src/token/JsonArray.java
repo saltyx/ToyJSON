@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Created by shiyan on 2017/1/19.
+ * Contact: shiyan233@hotmail.com
+ *          saltyx.github.io
  */
 public class JsonArray extends Json {
     private List<Value> list_;

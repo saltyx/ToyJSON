@@ -1,5 +1,6 @@
 package test;
 
+import lexer.FileUtils;
 import lexer.JsonLexException;
 import lexer.Lexer;
 import parser.JsonParseException;
@@ -13,6 +14,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 /**
  * Created by shiyan on 2017/1/19.
+ * Contact: shiyan233@hotmail.com
+ *          saltyx.github.io
  */
 public class Test {
 
@@ -35,7 +38,7 @@ public class Test {
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
                 if (file.getFileName().toString().matches("^([^.,/]+)\\.json$")) {
-                    lexer.setPath(file.toAbsolutePath().toString());
+                    lexer.resetSource(file.toAbsolutePath().toString(), Lexer.READ_MODE.READ_FROM_FILE);
                     System.out.print("test json:"+file + " ");
                     try {
                         Token token;
@@ -61,11 +64,16 @@ public class Test {
             }
         });
         System.out.println("done.");
+        System.out.print("testing lexer from string");
+        lexer.resetSource("{\"213\":111}", Lexer.READ_MODE.READ_FROM_STRING);
+        Token token;
+        while ((token = lexer.scan()) != null && token.getToken() != JsonToken.EOF);
+        System.out.println(" passed");
     }
 
     public static void testParser()throws IOException,
             JsonLexException, JsonParseException {
-        Parser parser = new Parser(new Lexer("./test/1.json"));
+        Parser parser = new Parser(new Lexer(new FileUtils("./test/1.json")));
 
     }
 

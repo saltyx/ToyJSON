@@ -8,20 +8,20 @@ import java.io.IOException;
 
 /**
  * Created by shiyan on 2017/1/19.
+ * Contact: shiyan233@hotmail.com
+ *          saltyx.github.io
  */
 public class Lexer {
+    public enum READ_MODE {
+        READ_FROM_FILE,READ_FROM_STRING
+    }
 
-    private FileUtils in_;
+    private BaseUtils in_;
     private int line_;
     private int at_;
     private Token token_;
 
-    public Lexer(String path) throws IOException {
-        this.in_ = new FileUtils(path);
-        init();
-    }
-
-    public Lexer(FileUtils in) {
+    public Lexer(BaseUtils in) {
         this.in_ = in;
         init();
     }
@@ -35,11 +35,16 @@ public class Lexer {
         this.token_ = null;
     }
     //修改文件路径，重新进行分析
-    public void setPath(String path) throws IOException {
-        if (this.in_ == null) {
+    public void resetSource(String source, READ_MODE mode) throws IOException {
+        if (mode == READ_MODE.READ_FROM_FILE
+                && (this.in_ == null || this.in_ instanceof StringUtils)) {
             this.in_ = new FileUtils();
+        } else if (mode == READ_MODE.READ_FROM_STRING
+                && (this.in_ == null || this.in_ instanceof FileUtils)){
+            this.in_ = new StringUtils();
         }
-        this.in_.setPath(path);
+
+        this.in_.setSource(source);
         init();
     }
 
